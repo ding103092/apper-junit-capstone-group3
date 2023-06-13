@@ -42,6 +42,10 @@ public class FlightService {
         flightList.add(flight);
     }
 
+    public int getNumberOfFlights() {
+        return flightList.size();
+    }
+
     public void registerUser(String name, Address address, String email, String phone, Account account) {
         // Is user already registered?
         try {
@@ -67,7 +71,7 @@ public class FlightService {
         try {
             Flight flight = findFlightByNumber(flightNumber);
             if(flight==null) throw new NullPointerException("No flight found.");
-            if((flight.getPlane().isSeatAvailable(numberOfSeats,seatClass))) throw new IllegalArgumentException("No seats available.");
+            if(!(flight.getPlane().isSeatAvailable(numberOfSeats,seatClass))) throw new IllegalArgumentException("No seats available.");
 
             // Updates avail seats (decrease capacity)
             flightList.get(findFlightIndex(flightNumber)).getPlane().setAvailableSeats(numberOfSeats,seatClass);
@@ -112,5 +116,10 @@ public class FlightService {
 
     public int numberOfAccounts() {
         return accountList.size();
+    }
+
+    public void displayTransactionHistory() {
+        System.out.println("Every Transaction History: ");
+        transactionList.forEach(System.out::println);
     }
 }

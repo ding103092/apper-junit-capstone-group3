@@ -65,8 +65,9 @@ public class Flight {
     @Override
     public String toString() {
         return "Flight#" + this.getFlightNumber().toUpperCase() + " | "
-                + this.departure.toString().toUpperCase()+"-"+this.arrival.toString().toUpperCase() + " | "
+                + this.departure.toString().toUpperCase()+" <-> "+this.arrival.toString().toUpperCase() + " | "
                 + this.flightDate.toString() + " | "
-                + this.plane.getPilotName().toUpperCase();
+                + this.plane.getPilotName().toUpperCase() + " | "
+                + this.plane.getAvailableSeats() + " SEATS";
     }
 }
