@@ -10,7 +10,6 @@ import group3.flight.Airport;
 import group3.flight.Flight;
 import group3.flight.Transaction;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;

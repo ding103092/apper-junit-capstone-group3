@@ -25,7 +25,6 @@ public class Passenger extends Person {
 
     public void addFlight(Flight flight) {
         flightList.add(flight);
-
     }
 
     @Override
