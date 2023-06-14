@@ -236,5 +236,4 @@ public class FlightAppTest {
         assertEquals(account, admin.getAccount());
     }
 
-
 }
