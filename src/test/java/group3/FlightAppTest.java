@@ -26,6 +26,7 @@ public class FlightAppTest {
     private FlightService flightService;
     private Account testAccount;
     private Flight testFlight;
+    private Person person;
 
     @BeforeEach
     public void setUp() {
@@ -37,6 +38,7 @@ public class FlightAppTest {
         LocalDate flightDate = LocalDate.now();
         testFlight = new Flight("FL123", departure, arrival, airplane, flightDate);
         testAccount = new Account("John Doe", "john@example.com", AccountType.PASSENGER);
+        person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
     }
 
     @Test
@@ -138,8 +140,26 @@ public class FlightAppTest {
 
     @Test
     public void testGetName() {
-        Person person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
+        assertEquals("Name", person.getName());
+    }
 
-        Assertions.assertEquals("Name", person.getName());
+    @Test
+    public void testGetAddress() {
+        assertEquals(new Address("City1", "City2", 3000, "Philippines"), person.getAddress());
+    }
+
+    @Test
+    public void testGetEmail() {
+        assertEquals("Email", person.getEmail());
+    }
+
+    @Test
+    public void testGetPhone() {
+        assertEquals("Phone", person.getPhone());
+    }
+
+    @Test
+    public void testGetAccount() {
+        assertEquals(tempAcc, person.getAccount());
     }
 }

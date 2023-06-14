@@ -33,6 +33,54 @@
   }
 }</component>
   <component name="RunManager">
+    <configuration name="FlightAppTest.testGetAccount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="apper-junit-capstone-group3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group3" />
+      <option name="MAIN_CLASS_NAME" value="group3.FlightAppTest" />
+      <option name="METHOD_NAME" value="testGetAccount" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FlightAppTest.testGetAddress" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="apper-junit-capstone-group3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group3" />
+      <option name="MAIN_CLASS_NAME" value="group3.FlightAppTest" />
+      <option name="METHOD_NAME" value="testGetAddress" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FlightAppTest.testGetEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="apper-junit-capstone-group3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group3" />
+      <option name="MAIN_CLASS_NAME" value="group3.FlightAppTest" />
+      <option name="METHOD_NAME" value="testGetEmail" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="FlightAppTest.testGetName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="apper-junit-capstone-group3" />
       <extension name="coverage">
@@ -49,9 +97,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FlightAppTest.testGetPhone" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="apper-junit-capstone-group3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="group3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="group3" />
+      <option name="MAIN_CLASS_NAME" value="group3.FlightAppTest" />
+      <option name="METHOD_NAME" value="testGetPhone" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FlightAppTest.testGetAccount" />
+        <item itemvalue="JUnit.FlightAppTest.testGetPhone" />
+        <item itemvalue="JUnit.FlightAppTest.testGetEmail" />
         <item itemvalue="JUnit.FlightAppTest.testGetName" />
+        <item itemvalue="JUnit.FlightAppTest.testGetAddress" />
       </list>
     </recent_temporary>
   </component>
@@ -78,7 +146,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/apper_junit_capstone_group3$FlightAppTest.ic" NAME="FlightAppTest Coverage Results" MODIFIED="1686724099827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/apper_junit_capstone_group3$FlightAppTest.ic" NAME="FlightAppTest Coverage Results" MODIFIED="1686725159427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>group3.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/apper_junit_capstone_group3$FlightAppTest_testGetName.ic" NAME="FlightAppTest.testGetName Coverage Results" MODIFIED="1686724082108" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
