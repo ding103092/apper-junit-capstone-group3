@@ -27,6 +27,16 @@ public class Passenger extends Person {
         flightList.add(flight);
     }
 
+    public List<Flight> getFlightList() {
+        return flightList;
+    }
+
+    public void displayAllFlights() {
+        for (Flight flight : flightList) {
+            System.out.println(flight);
+        }
+    }
+
     @Override
     public String toString() {
         return "Passenger " + this.getName();
