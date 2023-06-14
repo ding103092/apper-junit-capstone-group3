@@ -32,9 +32,9 @@ public class FlightAppTest {
     public void setUp() {
         fs = new FlightService();
         tempAcc = new Account("id", "password");
-        Airport departure = new Airport("DEP", new Address("Departure City", "Departure State",3000,"Philippines"));
-        Airport arrival = new Airport("ARR", new Address("Arrival City", "Arrival State",3000,"Philippines"));
-        Airplane airplane = new Airplane("ABC123", "2021","Captain Albert",2023);
+        Airport departure = new Airport("DEP", new Address("Departure City", "Departure State", 3000, "Philippines"));
+        Airport arrival = new Airport("ARR", new Address("Arrival City", "Arrival State", 3000, "Philippines"));
+        Airplane airplane = new Airplane("ABC123", "2021", "Captain Albert", 2023);
         LocalDate flightDate = LocalDate.now();
         testFlight = new Flight("FL123", departure, arrival, airplane, flightDate);
         testAccount = new Account("John Doe", "john@example.com", AccountType.PASSENGER);
@@ -169,6 +169,29 @@ public class FlightAppTest {
         String flightNumber = testFlight.getFlightNumber();
         Assertions.assertEquals("QWE123", flightNumber);
 
+    }
 
+    @Test
+    public void flightGetSetDepartureTest() {
+        Airport departure = testFlight.getDeparture();
+        Assertions.assertNotNull(departure);
+        Assertions.assertEquals("DEP Airport", departure.toString());
+
+        Airport newDeparture = new Airport("NEWDEP", new Address("Departure City", "Departure State", 3000, "Philippines"));
+        testFlight.setDeparture(newDeparture);
+        departure = testFlight.getDeparture();
+        Assertions.assertEquals(newDeparture, departure);
+    }
+
+    @Test
+    public void flightGetSetArrivalTest() {
+        Airport arrival = testFlight.getArrival();
+        Assertions.assertNotNull(arrival);
+        Assertions.assertEquals("ARR Airport", arrival.toString());
+
+        Airport newArrival = new Airport("NEWARR", new Address("Arrival City", "Arrival State", 3000, "Philippines"));
+        testFlight.setArrival(newArrival);
+        arrival = testFlight.getArrival();
+        Assertions.assertEquals(newArrival, arrival);
     }
 }
