@@ -236,10 +236,5 @@ public class FlightAppTest {
         assertEquals(account, admin.getAccount());
     }
 
-    @Test
-    public void flightSetPlaneTest() {
-        testFlight.setPlane(new Airplane("QWE123", "2021", "Captain JD", 2021));
-        Airplane newAirplane = testFlight.getPlane();
-        Assertions.assertEquals(newAirplane, testFlight.getPlane());
-    }
+
 }
