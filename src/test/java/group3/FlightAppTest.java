@@ -162,4 +162,13 @@ public class FlightAppTest {
     public void testGetAccount() {
         assertEquals(tempAcc, person.getAccount());
     }
+
+    @Test
+    public void flightSetFlightNumberTest() {
+        testFlight.setFlightNumber("QWE123");
+        String flightNumber = testFlight.getFlightNumber();
+        Assertions.assertEquals("QWE123", flightNumber);
+
+
+    }
 }
