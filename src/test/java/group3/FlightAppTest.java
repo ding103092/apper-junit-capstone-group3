@@ -27,15 +27,19 @@ public class FlightAppTest {
     private Account testAccount;
     private Flight testFlight;
     private Person person;
+    private Airport departure;
+    private Airport arrival;
+    private Airplane airplane;
+    private LocalDate flightDate;
 
     @BeforeEach
     public void setUp() {
         fs = new FlightService();
         tempAcc = new Account("id", "password");
-        Airport departure = new Airport("DEP", new Address("Departure City", "Departure State", 3000, "Philippines"));
-        Airport arrival = new Airport("ARR", new Address("Arrival City", "Arrival State", 3000, "Philippines"));
-        Airplane airplane = new Airplane("ABC123", "2021", "Captain Albert", 2023);
-        LocalDate flightDate = LocalDate.now();
+        departure = new Airport("DEP", new Address("Departure City", "Departure State", 3000, "Philippines"));
+        arrival = new Airport("ARR", new Address("Arrival City", "Arrival State", 3000, "Philippines"));
+        airplane = new Airplane("ABC123", "2021", "Captain Albert", 2023);
+        flightDate = LocalDate.now();
         testFlight = new Flight("FL123", departure, arrival, airplane, flightDate);
         testAccount = new Account("John Doe", "john@example.com", AccountType.PASSENGER);
         person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
@@ -62,10 +66,18 @@ public class FlightAppTest {
 
     @Test
     public void testAddFlight() {
-        fs.addFlight(Const.FL1);
-        fs.addFlight(Const.FL2);
-        fs.addFlight(Const.FL3);
-        assertEquals(3, fs.getNumberOfFlights());
+        String flightNumber = "TEST-123";
+
+        //String flightNumber, Airport departure, Airport arrival, Airplane plane, LocalDate flightDate
+        fs.addFlight(flightNumber, departure, arrival, airplane, flightDate);
+
+        assertEquals(1, fs.getNumberOfFlights());
+        Flight flight = fs.findFlightByNumber(flightNumber);
+        assertEquals(flightNumber, flight.getFlightNumber());
+        assertEquals(departure, flight.getDeparture());
+        assertEquals(arrival, flight.getArrival());
+        assertEquals(airplane, flight.getPlane());
+        assertEquals(flightDate, flight.getFlightDate());
     }
 
 
