@@ -1,6 +1,7 @@
 package group3;
 
 import group3.accounts.Account;
+import group3.accounts.Passenger;
 import group3.accounts.Person;
 import group3.constants.AccountType;
 import group3.constants.Address;
@@ -17,8 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FlightAppTest {
     private FlightService fs;
@@ -193,5 +193,26 @@ public class FlightAppTest {
         testFlight.setArrival(newArrival);
         arrival = testFlight.getArrival();
         Assertions.assertEquals(newArrival, arrival);
+    }
+
+    @Test
+    public void testGetAmountPayable() {
+        double amountPayable = Flight.getAmountPayable(5, SeatClass.ECONOMY);
+        assertEquals(25000.0, amountPayable);
+    }
+
+    @Test
+    public void testFindFlightIndex() {
+        fs.addFlight(testFlight);
+        int index = fs.findFlightIndex("FL123");
+        assertEquals(0, index);
+    }
+
+    @Test
+    public void testFindPassengerByAccount() {
+        fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
+        Passenger passenger = fs.findPassengerByAccount(tempAcc);
+        assertNotNull(passenger);
+        assertEquals("user", passenger.getName());
     }
 }
