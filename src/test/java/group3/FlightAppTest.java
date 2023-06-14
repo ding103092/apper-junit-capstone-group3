@@ -33,6 +33,7 @@ public class FlightAppTest {
     private Airport arrival;
     private Airplane airplane;
     private LocalDate flightDate;
+    private Passenger testPassenger;
 
     @BeforeEach
     public void setUp() {
@@ -45,6 +46,7 @@ public class FlightAppTest {
         testFlight = new Flight("FL123", departure, arrival, airplane, flightDate);
         testAccount = new Account("John Doe", "john@example.com", AccountType.PASSENGER);
         person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
+        testPassenger = new Passenger("John Doe", new Address("City1", "City2", 3000, "Philippines"), "john@example.com", "1234567890", testAccount);
     }
 
 
@@ -223,6 +225,11 @@ public class FlightAppTest {
     public void testGetAmountPayable() {
         double amountPayable = Flight.getAmountPayable(5, SeatClass.ECONOMY);
         assertEquals(25000.0, amountPayable);
+
+        double expectedAmount = 100.0;
+        testPassenger.setAmountPayable(expectedAmount);
+        double actualAmount = testPassenger.getAmountPayable();
+        Assertions.assertEquals(expectedAmount, actualAmount);
     }
 
     @Test
