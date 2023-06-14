@@ -4,10 +4,7 @@ import group3.accounts.Account;
 import group3.accounts.Admin;
 import group3.accounts.Passenger;
 import group3.accounts.Person;
-import group3.constants.AccountType;
-import group3.constants.Address;
-import group3.constants.Const;
-import group3.constants.SeatClass;
+import group3.constants.*;
 import group3.flight.Airplane;
 import group3.flight.Airport;
 import group3.flight.Flight;
@@ -18,14 +15,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FlightAppTest {
     private FlightService fs;
+    private FlightService fs2;
     private Account tempAcc;
-    private FlightService flightService;
     private Account testAccount;
     private Flight testFlight;
     private Person person;
@@ -38,6 +37,7 @@ public class FlightAppTest {
     @BeforeEach
     public void setUp() {
         fs = new FlightService();
+        fs2 = new FlightService();
         tempAcc = new Account("id", "password");
         departure = new Airport("DEP", new Address("Departure City", "Departure State", 3000, "Philippines"));
         arrival = new Airport("ARR", new Address("Arrival City", "Arrival State", 3000, "Philippines"));
@@ -92,17 +92,6 @@ public class FlightAppTest {
         assertEquals(flightDate, flight.getFlightDate());
     }
 
-
-    @Test
-    public void testBookFlight() {
-        fs.addFlight(testFlight);
-        //fs.registerUser("John Doe", new Address(), "john@example.com", "1234567890", testAccount);
-        fs.bookFlight("FL123", 5, SeatClass.ECONOMY, testAccount);
-        int bookedSeats = testFlight.getPlane().getNumberOfFilledSeats(SeatClass.ECONOMY);
-        assertEquals(5, bookedSeats);
-    }
-
-
     @Test
     @DisplayName("This is to check Flight by number")
     public void testFindFlightByNumber() {
@@ -111,14 +100,6 @@ public class FlightAppTest {
 
         Assertions.assertNotNull(foundFlight);
         assertEquals(testFlight, foundFlight);
-    }
-
-
-    @Test
-    public void testDisplayTransactionHistory() {
-        fs.addFlight(Const.FL1);
-        fs.bookFlight(Const.FL1.getFlightNumber(), 5, SeatClass.ECONOMY, tempAcc);
-        fs.displayTransactionHistory();
     }
 
     @Test
@@ -252,7 +233,7 @@ public class FlightAppTest {
     }
 
     @Test
-    @DisplayName("This is to test Finding Passeneger by Account")
+    @DisplayName("This is to test Finding Passenger by Account")
     public void testFindPassengerByAccount() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         Passenger passenger = fs.findPassengerByAccount(tempAcc);
@@ -318,9 +299,108 @@ public class FlightAppTest {
 
     @Test
     @DisplayName("This is to test created Passenger")
-    public void testToStringPassenger() {
-        Passenger passenger = new Passenger("Name", new Address("City", "State", 3000, "Philippines"), "Email", "Phone", tempAcc);
+    public void testPassenger() {
+        // Test passenger name
+        assertEquals("Passenger John Doe", testPassenger.toString());
 
-        assertEquals("Passenger Name", passenger.toString());
+        // Add a flight test
+        assertEquals(0, testPassenger.getFlightList().size());
+        assertTrue(testPassenger.getFlightList().isEmpty());
+        testPassenger.addFlight(testFlight);
+        assertEquals(1, testPassenger.getFlightList().size());
+
+        // Display all flight test
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outStream);
+        System.setOut(printStream);
+
+        testPassenger.displayAllFlights();
+        String output = outStream.toString().trim();
+
+        Assertions.assertEquals("Flight#" + this.testFlight.getFlightNumber().toUpperCase() + " | "
+                + this.departure.toString().toUpperCase()+" <-> "+this.arrival.toString().toUpperCase() + " | "
+                + this.flightDate.toString() + " | "
+                + this.airplane.getPilotName().toUpperCase() + " | "
+                + this.airplane.getAvailableSeats() + " SEATS", output);
+    }
+
+    @Test
+    @DisplayName("This is to test Airplane details")
+    public void testAirplaneDetails() throws FlightService.NoSeatAvailableException, FlightService.NoFlightFoundException, FlightService.InvalidAccountException {
+        // Airplane details with default values
+        assertAll("Airplane details",
+                () -> assertEquals("ABC123", airplane.getName()),
+                () -> assertEquals("2021", airplane.getModel()),
+                () -> assertEquals("Captain Albert", airplane.getPilotName()),
+                () -> assertEquals(2023, airplane.getManufacturingYear()),
+                () -> assertEquals(300, airplane.getAvailableSeats()),
+                () -> assertEquals(100, airplane.getAvailableSeats(SeatClass.ECONOMY)),
+                () -> assertEquals(100, airplane.getAvailableSeats(SeatClass.BUSINESS)),
+                () -> assertEquals(100, airplane.getAvailableSeats(SeatClass.FIRSTCLASS))
+        );
+
+        // Updating available seats after booking a flight
+        fs.addFlight(Const.FL1);
+        fs.registerUser("USER",Const.ADDR1,"email","phone",testAccount);
+        fs.bookFlight(Const.FL1.getFlightNumber(),5, SeatClass.ECONOMY, testAccount);
+        fs.bookFlight(Const.FL1.getFlightNumber(),10, SeatClass.BUSINESS, testAccount);
+        fs.bookFlight(Const.FL1.getFlightNumber(),15, SeatClass.FIRSTCLASS, testAccount);
+        assertEquals(270,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getAvailableSeats());
+
+        // Check if available seats are updated after booking
+        assertEquals(95,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getAvailableSeats(SeatClass.ECONOMY));
+        assertEquals(90,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getAvailableSeats(SeatClass.BUSINESS));
+        assertEquals(85,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getAvailableSeats(SeatClass.FIRSTCLASS));
+        assertEquals(5,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getNumberOfFilledSeats(SeatClass.ECONOMY));
+        assertEquals(10,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getNumberOfFilledSeats(SeatClass.BUSINESS));
+        assertEquals(15,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getNumberOfFilledSeats(SeatClass.FIRSTCLASS));
+        assertEquals(30,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getNumberOfFilledSeats());
+
+        // Check revenue of the flight
+        // 5*5000 + 10*10000 + 15*15000 = 350000
+        assertEquals(350000,fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().getRevenue());
+
+        // Test the name of the plane
+        assertEquals("PLANE 1-MODEL 1-1999",fs.findFlightByNumber(Const.FL1.getFlightNumber()).getPlane().toString());
+        fs.displayTransactionHistory();
+    }
+
+    @Test
+    @DisplayName("This is to test the custom exceptions")
+    public void testCustomExceptions() throws FlightService.NoSeatAvailableException, FlightService.NoFlightFoundException, FlightService.InvalidAccountException {
+        // Register as admin
+        Account adminAcc = new Account("admin","admin",AccountType.ADMINISTRATOR);
+        fs2.registerUser("ADMIN1",Const.ADDR1,"email","phone",adminAcc);
+
+        // No flight found
+        Exception e1 = assertThrows(FlightService.NoFlightFoundException.class, () -> fs2.bookFlight(Const.FL3.getFlightNumber(),5, SeatClass.ECONOMY, testAccount));
+        assertEquals("No flight found.",e1.getMessage());
+
+        // Now we add the flight and book the seats
+        fs2.addFlight(Const.FL3);
+        fs2.registerUser("USER",Const.ADDR1,"email","phone",testAccount);
+        fs2.bookFlight(Const.FL3.getFlightNumber(),100, SeatClass.ECONOMY, testAccount);
+        fs2.bookFlight(Const.FL3.getFlightNumber(),100, SeatClass.BUSINESS, testAccount);
+        fs2.bookFlight(Const.FL3.getFlightNumber(),100, SeatClass.FIRSTCLASS, testAccount);
+
+        // Cannot book flight as admin
+        Exception e2 = assertThrows(FlightService.InvalidAccountException.class, () -> fs2.bookFlight(Const.FL3.getFlightNumber(),5, SeatClass.ECONOMY, adminAcc));
+        assertEquals("Account not a passenger.",e2.getMessage());
+
+        // No more seats available
+        Exception e3 = assertThrows(FlightService.NoSeatAvailableException.class, () -> fs2.bookFlight(Const.FL3.getFlightNumber(),5, SeatClass.ECONOMY, testAccount));
+        assertEquals("No seats available.",e3.getMessage());
+
+        // Only view account, passenger, flight, admin, transaction list as admin
+        assertThrows(FlightService.InvalidAccountException.class, () -> fs2.displayAllAccounts(testAccount));
+        assertThrows(FlightService.InvalidAccountException.class, () -> fs2.displayAllFlight(testAccount));
+        assertThrows(FlightService.InvalidAccountException.class, () -> fs2.displayAllAdmins(testAccount));
+        assertThrows(FlightService.InvalidAccountException.class, () -> fs2.displayAllPassengers(testAccount));
+
+        // Call methods related to display list
+        fs2.displayAllAccounts(adminAcc);
+        fs2.displayAllFlight(adminAcc);
+        fs2.displayAllAdmins(adminAcc);
+        fs2.displayAllPassengers(adminAcc);
     }
 }
