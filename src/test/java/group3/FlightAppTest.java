@@ -275,4 +275,13 @@ public class FlightAppTest {
         Assertions.assertEquals(newAirplane, testFlight.getPlane());
     }
 
+    @Test
+    public void flightToString() {
+        Assertions.assertEquals("Flight#" + this.testFlight.getFlightNumber().toUpperCase() + " | "
+                + this.departure.toString().toUpperCase()+" <-> "+this.arrival.toString().toUpperCase() + " | "
+                + this.flightDate.toString() + " | "
+                + this.airplane.getPilotName().toUpperCase() + " | "
+                + this.airplane.getAvailableSeats() + " SEATS", testFlight.toString());
+    }
+
 }
