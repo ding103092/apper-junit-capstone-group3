@@ -8,6 +8,7 @@ import group3.constants.SeatClass;
 import group3.flight.Airplane;
 import group3.flight.Airport;
 import group3.flight.Flight;
+import group3.flight.Transaction;
 import group3.service.FlightService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,5 +93,21 @@ public class FlightAppTest {
         fs.displayTransactionHistory();
     }
 
-    //Add more tests here
+    @Test
+    public void testToString() {
+        // Create test data
+        LocalDate flightDate = LocalDate.of(2023, 6, 1);
+        String planeNumber = "FL123";
+        int numberOfPassengers = 5;
+        double fare = 100.0;
+
+        // Create a Transaction instance with the test data
+        Transaction transaction = new Transaction(flightDate, planeNumber, numberOfPassengers, fare);
+
+        // Define the expected string representation of the Transaction instance
+        String expectedString = "2023-06-01 | ABC123 | 5 | 100.0";
+
+        // Verify that the toString() method returns the expected string
+        assertEquals(expectedString, transaction.toString());
+    }
 }
