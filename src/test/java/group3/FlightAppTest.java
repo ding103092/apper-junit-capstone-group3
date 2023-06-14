@@ -1,6 +1,7 @@
 package group3;
 
 import group3.accounts.Account;
+import group3.accounts.Admin;
 import group3.accounts.Passenger;
 import group3.accounts.Person;
 import group3.constants.AccountType;
@@ -214,5 +215,24 @@ public class FlightAppTest {
         Passenger passenger = fs.findPassengerByAccount(tempAcc);
         assertNotNull(passenger);
         assertEquals("user", passenger.getName());
+    }
+
+    @Test
+    public void testAdmin() {
+        // Test Data
+        String name = "John Doe";
+        Address address = new Address("City", "State", 1234, "Country");
+        String email = "john@example.com";
+        String phone = "1234567890";
+        Account account = new Account("admin", "password123");
+
+        Admin admin = new Admin(name, address, email, phone, account);
+
+        // Constructor and Getters
+        assertEquals(name, admin.getName());
+        assertEquals(address, admin.getAddress());
+        assertEquals(email, admin.getEmail());
+        assertEquals(phone, admin.getPhone());
+        assertEquals(account, admin.getAccount());
     }
 }
