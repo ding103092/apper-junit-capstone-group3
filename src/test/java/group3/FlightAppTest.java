@@ -258,5 +258,21 @@ public class FlightAppTest {
         assertEquals(phone, admin.getPhone());
         assertEquals(account, admin.getAccount());
     }
+    @Test
+    public void flightGetSetFlightDateTest() {
+        LocalDate dateOfFlight = testFlight.getFlightDate();
+        Assertions.assertEquals(dateOfFlight, testFlight.getFlightDate());
+        Assertions.assertNotNull(dateOfFlight);
+
+        testFlight.setFlightDate(LocalDate.of(2023, 10, 27));
+        Assertions.assertEquals(LocalDate.of(2023, 10, 27), testFlight.getFlightDate());
+    }
+
+    @Test
+    public void flightSetPlaneTest() {
+        testFlight.setPlane(new Airplane("QWE123", "2021", "Captain JD", 2021));
+        Airplane newAirplane = testFlight.getPlane();
+        Assertions.assertEquals(newAirplane, testFlight.getPlane());
+    }
 
 }
