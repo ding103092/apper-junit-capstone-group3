@@ -284,4 +284,17 @@ public class FlightAppTest {
                 + this.airplane.getAvailableSeats() + " SEATS", testFlight.toString());
     }
 
+    @Test
+    public void testToStringAirport() {
+        Airport airport = new Airport("AIRPORT1", new Address("Departure City", "Departure State",3000,"Philippines"));
+
+        assertEquals("AIRPORT1 Airport", airport.toString());
+    }
+
+    @Test
+    public void testToStringPassenger() {
+        Passenger passenger = new Passenger("Name", new Address("City", "State", 3000, "Philippines"), "Email", "Phone", tempAcc);
+
+        assertEquals("Passenger Name", passenger.toString());
+    }
 }
