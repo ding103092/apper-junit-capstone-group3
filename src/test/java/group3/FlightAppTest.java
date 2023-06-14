@@ -15,6 +15,7 @@ import group3.flight.Transaction;
 import group3.service.FlightService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -46,26 +47,34 @@ public class FlightAppTest {
         person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
     }
 
+
     @Test
+    @DisplayName("This test is to verify registration of user")
     public void testRegisterUser() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         assertEquals(1, fs.numberOfAccounts());
     }
 
+
     @Test
+    @DisplayName("This is to test Duplicate User Account")
     public void testRegisterUserDuplicateAccount() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         assertEquals(1, fs.numberOfAccounts());
     }
 
+
     @Test
+    @DisplayName("This is to check number of registered Users")
     public void testNumberOfRegisteredUsers() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         assertEquals(1, fs.numberOfRegisteredUsers());
     }
 
+
     @Test
+    @DisplayName("This is to verify added flight")
     public void testAddFlight() {
         String flightNumber = "TEST-123";
 
@@ -93,6 +102,7 @@ public class FlightAppTest {
 
 
     @Test
+    @DisplayName("This is to check Flight by number")
     public void testFindFlightByNumber() {
         fs.addFlight(testFlight);
         Flight foundFlight = fs.findFlightByNumber("FL123");
@@ -110,6 +120,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test created Transaction")
     public void testToStringTransaction() {
         // Create test data
         LocalDate flightDate = LocalDate.of(2023, 3, 20);
@@ -247,4 +258,5 @@ public class FlightAppTest {
         assertEquals(phone, admin.getPhone());
         assertEquals(account, admin.getAccount());
     }
+
 }
