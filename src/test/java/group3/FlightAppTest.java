@@ -122,4 +122,16 @@ public class FlightAppTest {
         // Verify that the toString() method returns the expected string
         assertEquals(expectedString, address.toString());
     }
+
+    @Test
+    public void testGetPassword() {
+        // Create an Account instance with test data
+        Account account = new Account("Name", "password123");
+
+        // Define the expected password
+        String expectedPassword = "password123";
+
+        // Verify that the getPassword() method returns the expected password
+        assertEquals(expectedPassword, account.getPassword());
+    }
 }
