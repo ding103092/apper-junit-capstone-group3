@@ -1,6 +1,7 @@
 package group3;
 
 import group3.accounts.Account;
+import group3.accounts.Person;
 import group3.constants.AccountType;
 import group3.constants.Address;
 import group3.constants.Const;
@@ -133,5 +134,12 @@ public class FlightAppTest {
 
         // Verify that the getPassword() method returns the expected password
         assertEquals(expectedPassword, account.getPassword());
+    }
+
+    @Test
+    public void testGetName() {
+        Person person = new Person("Name", new Address("City1", "City2", 3000, "Philippines"), "Email", "Phone", tempAcc);
+
+        Assertions.assertEquals("Name", person.getName());
     }
 }
