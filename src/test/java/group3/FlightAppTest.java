@@ -141,6 +141,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to verify created Address")
     public void testToStringAddress() {
         // Create an Address instance with test data
         Address address = new Address("City", "State", 12345, "Country");
@@ -153,6 +154,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to verify expected Password")
     public void testGetPassword() {
         // Create an Account instance with test data
         Account account = new Account("Name", "password123");
@@ -195,6 +197,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Flight Number")
     public void flightSetFlightNumberTest() {
         testFlight.setFlightNumber("QWE123");
         String flightNumber = testFlight.getFlightNumber();
@@ -203,6 +206,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Departure Location")
     public void flightGetSetDepartureTest() {
         Airport departure = testFlight.getDeparture();
         Assertions.assertNotNull(departure);
@@ -215,6 +219,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Arrival Location")
     public void flightGetSetArrivalTest() {
         Airport arrival = testFlight.getArrival();
         Assertions.assertNotNull(arrival);
@@ -275,6 +280,7 @@ public class FlightAppTest {
         assertEquals(account, admin.getAccount());
     }
     @Test
+    @DisplayName("This is to test Flight Date")
     public void flightGetSetFlightDateTest() {
         LocalDate dateOfFlight = testFlight.getFlightDate();
         Assertions.assertEquals(dateOfFlight, testFlight.getFlightDate());
@@ -285,6 +291,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test expected Plane Information")
     public void flightSetPlaneTest() {
         testFlight.setPlane(new Airplane("QWE123", "2021", "Captain JD", 2021));
         Airplane newAirplane = testFlight.getPlane();
@@ -292,6 +299,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Flight number to string conversion")
     public void flightToString() {
         Assertions.assertEquals("Flight#" + this.testFlight.getFlightNumber().toUpperCase() + " | "
                 + this.departure.toString().toUpperCase()+" <-> "+this.arrival.toString().toUpperCase() + " | "
