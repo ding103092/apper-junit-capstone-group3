@@ -220,12 +220,14 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test GetAmountPayable")
     public void testGetAmountPayable() {
         double amountPayable = Flight.getAmountPayable(5, SeatClass.ECONOMY);
         assertEquals(25000.0, amountPayable);
     }
 
     @Test
+    @DisplayName("This is to test Flight Index")
     public void testFindFlightIndex() {
         fs.addFlight(testFlight);
         int index = fs.findFlightIndex("FL123");
@@ -233,6 +235,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Finding Passeneger by Account")
     public void testFindPassengerByAccount() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         Passenger passenger = fs.findPassengerByAccount(tempAcc);
@@ -241,6 +244,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Admin Class")
     public void testAdmin() {
         // Test Data
         String name = "John Doe";
