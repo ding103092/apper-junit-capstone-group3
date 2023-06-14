@@ -3,6 +3,7 @@ package group3.service;
 import group3.accounts.Account;
 import group3.accounts.Admin;
 import group3.accounts.Passenger;
+import group3.constants.AccountType;
 import group3.constants.Address;
 import group3.constants.SeatClass;
 import group3.flight.Airplane;
@@ -22,8 +23,6 @@ public class FlightService {
     List<Admin>          adminList;
     List<Flight>         flightList;
     List<Transaction>    transactionList;
-
-    // List<Transaction> transactions TODO: Add transactions list here
 
     public FlightService() {
         this.accountList    = new HashMap<>();
@@ -63,27 +62,61 @@ public class FlightService {
         }
     }
 
-    public void bookFlight(String flightNumber, int numberOfSeats, SeatClass seatClass, Account account) {
+    public void bookFlight(String flightNumber, int numberOfSeats, SeatClass seatClass, Account account) throws NoSeatAvailableException, NoFlightFoundException, InvalidAccountException {
         // Does flight exist?
         // Are there available seats, depending on seatClass?
         // Update amount payable for current user
         try {
-            Flight flight = findFlightByNumber(flightNumber);
-            if(flight==null) throw new NullPointerException("No flight found.");
-            if(!(flight.getPlane().isSeatAvailable(numberOfSeats,seatClass))) throw new IllegalArgumentException("No seats available.");
+            if(account.getAccountType().equals(AccountType.PASSENGER)) {
+                Flight flight = findFlightByNumber(flightNumber);
+                if(flight==null) throw new NoFlightFoundException("No flight found.");
+                if(!(flight.getPlane().isSeatAvailable(numberOfSeats,seatClass))) throw new NoSeatAvailableException("No seats available.");
 
-            // Updates avail seats (decrease capacity)
-            flightList.get(findFlightIndex(flightNumber)).getPlane().setAvailableSeats(numberOfSeats,seatClass);
-            // Update passenger bill
-            passengerList.get(findPassengerIndex(account)).setAmountPayable(Flight.getAmountPayable(numberOfSeats,seatClass));
-            // Add flight to passenger flightList
-            passengerList.get(findPassengerIndex(account)).addFlight(flight);
-            // Add a transaction to transaction list
-            transactionList.add(new Transaction(flight.getFlightDate(),flight.getPlane().getName(),
-                    flight.getPlane().getNumberOfFilledSeats(),flight.getPlane().getRevenue()));
+                // Updates avail seats (decrease capacity)
+                flightList.get(findFlightIndex(flightNumber)).getPlane().setAvailableSeats(numberOfSeats,seatClass);
+                // Update passenger bill
+                passengerList.get(findPassengerIndex(account)).setAmountPayable(Flight.getAmountPayable(numberOfSeats,seatClass));
+                // Add flight to passenger flightList
+                passengerList.get(findPassengerIndex(account)).addFlight(flight);
+                // Add a transaction to transaction list
+                transactionList.add(new Transaction(flight.getFlightDate(),flight.getPlane().getName(),
+                        flight.getPlane().getNumberOfFilledSeats(),flight.getPlane().getRevenue()));
+            } else {
+                throw new InvalidAccountException("Account not a passenger.");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            throw e;
         }
+    }
+
+    public void displayAllAccounts(Account account) throws InvalidAccountException {
+        if(account.getAccountType() == AccountType.ADMINISTRATOR) {
+            accountList.values().forEach(System.out::println);
+        } else throw new InvalidAccountException("Invalid account type: " + account.getAccountType());
+    }
+
+    public void displayAllPassengers(Account account) throws InvalidAccountException {
+        if(account.getAccountType() == AccountType.ADMINISTRATOR) {
+            passengerList.forEach(System.out::println);
+        } else throw new InvalidAccountException("Invalid account type: " + account.getAccountType());
+    }
+
+    public void displayAllAdmins(Account account) throws InvalidAccountException {
+        if(account.getAccountType() == AccountType.ADMINISTRATOR) {
+            adminList.forEach(System.out::println);
+        } else throw new InvalidAccountException("Invalid account type: " + account.getAccountType());
+    }
+
+    public void displayAllFlight(Account account) throws InvalidAccountException {
+        if(account.getAccountType() == AccountType.ADMINISTRATOR) {
+            flightList.forEach(System.out::println);
+        } else throw new InvalidAccountException("Invalid account type: " + account.getAccountType());
+    }
+
+    public void displayTransactionHistory() {
+        System.out.println("Every Transaction History: ");
+        transactionList.forEach(System.out::println);
     }
 
     // Helper functions
@@ -100,13 +133,13 @@ public class FlightService {
         return passengerList.stream()
                 .filter(flight->flight.getAccount().equals(account))
                 .findFirst()
-                .orElse(null); // TODO: Can also throw this as error (TBD)
+                .orElse(null);
     }
     public Flight findFlightByNumber(String flightNumber) {
         return flightList.stream()
                 .filter(flight -> flight.getFlightNumber().equals(flightNumber))
                 .findFirst()
-                .orElse(null); // Flight with the given flightNumber not found
+                .orElse(null);
     }
 
     public int numberOfRegisteredUsers() {
@@ -117,8 +150,23 @@ public class FlightService {
         return accountList.size();
     }
 
-    public void displayTransactionHistory() {
-        System.out.println("Every Transaction History: ");
-        transactionList.forEach(System.out::println);
+    // Custom exceptions
+    public static class InvalidAccountException extends Exception {
+        public InvalidAccountException(String message) {
+            super(message);
+        }
     }
+
+    public static class NoFlightFoundException extends Exception {
+        public NoFlightFoundException(String message) {
+            super(message);
+        }
+    }
+
+    public static class NoSeatAvailableException extends Exception {
+        public NoSeatAvailableException(String message) {
+            super(message);
+        }
+    }
+
 }

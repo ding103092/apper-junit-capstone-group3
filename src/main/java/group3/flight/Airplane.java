@@ -34,32 +34,16 @@ public class Airplane {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getPilotName() {
         return pilotName;
     }
 
-    public void setPilotName(String pilotName) {
-        this.pilotName = pilotName;
-    }
-
     public int getManufacturingYear() {
         return manufacturingYear;
-    }
-
-    public void setManufacturingYear(int manufacturingYear) {
-        this.manufacturingYear = manufacturingYear;
     }
 
     public int getAvailableSeats() {
@@ -84,10 +68,6 @@ public class Airplane {
 
     public int getNumberOfFilledSeats() {
         return maxCapacity - getAvailableSeats();
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
     }
 
     public void setAvailableSeats(int availableSeats, SeatClass seatClass) {
