@@ -96,7 +96,7 @@ public class FlightAppTest {
     @Test
     public void testToStringTransaction() {
         // Create test data
-        LocalDate flightDate = LocalDate.of(2023, 6, 1);
+        LocalDate flightDate = LocalDate.of(2023, 3, 20);
         String planeNumber = "FL123";
         int numberOfPassengers = 5;
         double fare = 100.0;
@@ -105,7 +105,7 @@ public class FlightAppTest {
         Transaction transaction = new Transaction(flightDate, planeNumber, numberOfPassengers, fare);
 
         // Define the expected string representation of the Transaction instance
-        String expectedString = "2023-03-20 | ABC123 | 5 | 100.0";
+        String expectedString = "2023-03-20 | FL123 | 5 | 100.0";
 
         // Verify that the toString() method returns the expected string
         assertEquals(expectedString, transaction.toString());
