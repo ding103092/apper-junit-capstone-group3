@@ -165,26 +165,31 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Name parameter in Person class")
     public void testGetName() {
         assertEquals("Name", person.getName());
     }
 
     @Test
+    @DisplayName("This is to test Address parameter in Person class")
     public void testGetAddress() {
         assertEquals(new Address("City1", "City2", 3000, "Philippines"), person.getAddress());
     }
 
     @Test
+    @DisplayName("This is to test Email parameter in Person class")
     public void testGetEmail() {
         assertEquals("Email", person.getEmail());
     }
 
     @Test
+    @DisplayName("This is to test Phone parameter in Person class")
     public void testGetPhone() {
         assertEquals("Phone", person.getPhone());
     }
 
     @Test
+    @DisplayName("This is to test Account parameter in Person class")
     public void testGetAccount() {
         assertEquals(tempAcc, person.getAccount());
     }
@@ -222,6 +227,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test GetAmountPayable")
     public void testGetAmountPayable() {
         double amountPayable = Flight.getAmountPayable(5, SeatClass.ECONOMY);
         assertEquals(25000.0, amountPayable);
@@ -233,6 +239,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Flight Index")
     public void testFindFlightIndex() {
         fs.addFlight(testFlight);
         int index = fs.findFlightIndex("FL123");
@@ -240,6 +247,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Finding Passeneger by Account")
     public void testFindPassengerByAccount() {
         fs.registerUser("user", Const.ADDR1, "email", "phone", tempAcc);
         Passenger passenger = fs.findPassengerByAccount(tempAcc);
@@ -248,6 +256,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test Admin Class")
     public void testAdmin() {
         // Test Data
         String name = "John Doe";
@@ -292,6 +301,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test created Airport")
     public void testToStringAirport() {
         Airport airport = new Airport("AIRPORT1", new Address("Departure City", "Departure State",3000,"Philippines"));
 
@@ -299,6 +309,7 @@ public class FlightAppTest {
     }
 
     @Test
+    @DisplayName("This is to test created Passenger")
     public void testToStringPassenger() {
         Passenger passenger = new Passenger("Name", new Address("City", "State", 3000, "Philippines"), "Email", "Phone", tempAcc);
 
